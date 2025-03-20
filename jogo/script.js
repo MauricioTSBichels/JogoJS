@@ -9,11 +9,15 @@ document.addEventListener('keypress',(botaop)=>{
     personagem.pulando=true
     personagem.velocidade_y=15
  }
- if (botaop.code=="R"){
-    reset=true
-    gameOver=false
- }    
+ console.log(botaop)   
 })
+
+document.addEventListener('keypress',(botaor)=>{
+    if (botaor.code=="KeyR"){
+       reset=true
+    }
+    console.log(botaor)    
+   })
 
 const personagem = {
     x:100,
@@ -109,7 +113,7 @@ function Restart(){
     obstaculo.altura=100
     obstaculo.velocidade_x=4
     //limpar
-    ctx.clearRect(0,0,canvas.width,canvas.height)
+    gameOver=false
 }
 function loop (){
     if (gameOver==false){
