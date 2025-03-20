@@ -1,6 +1,7 @@
 const canvas = document.getElementById ('jogocanvas')
 const ctx = canvas.getContext('2d')
 let gravidade = 0.5
+let gameOver=false
 
 document.addEventListener('keypress',(botaop)=>{
  if (botaop.code == "Space"){
@@ -19,10 +20,11 @@ const personagem = {
 }
 
 const obstaculo = {
-    x:700,
-    y:100,
+    x:canvas.width-50,
+    y:canvas.height-100,
     largura:50,
-    altura:50,
+    altura:100,
+    velocidade_x:4,
 }
 
 function desenharpersonagem (){
@@ -67,11 +69,32 @@ function desenharobstaculo() {
         obstaculo.largura,
         obstaculo.altura)   
 }
+function atualizarobstaculo(){
+    obstaculo.x=obstaculo.x-obstaculo.velocidade_x
+    if (obstaculo.x<=0){
+       obstaculo.x=canvas.width
+    }
+}
+function verificarColizao(){
+  if (obstaculo.x < personagem.x + personagem.largura && obstaculo.largura + obstaculo.x > personagem.x
+      && personagem.y < obstaculo.y + obstaculo.altura && personagem.y + obstaculo.altura > obstaculo.y) {
+     obstaculo.velocidade_x=0
+     personagem.velocidade_y=0
+     ctx.fillStyle='yellow'
+     ctx.font='50px Arial'
+     ctx.fillText('GAME OVER',50,100)
+     gameOver=true
+  }
+}
 function loop (){
+    if (gameOver==false){
     ctx.clearRect(0,0,canvas.width,canvas.height)
     desenharpersonagem()
     atualizarpersonagem()
     desenharobstaculo()
+    atualizarobstaculo()
+    verificarColizao()
+    }
     requestAnimationFrame(loop)
 }
 function g(){
