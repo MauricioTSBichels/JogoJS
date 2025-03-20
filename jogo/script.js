@@ -99,21 +99,7 @@ function verificarColizao(){
   }
 }
 function Restart(){
-    //personagem
-    personagem.x=100
-    personagem.y=canvas.height-50
-    personagem.largura=50
-    personagem.altura=50
-    personagem.velocidade_y=0
-    personagem.pulando=false
-    //obstaculo
-    obstaculo.x=canvas.width-50
-    obstaculo.y=canvas.height-100
-    obstaculo.largura=50
-    obstaculo.altura=100
-    obstaculo.velocidade_x=4
-    //limpar
-    gameOver=false
+    location.reload()
 }
 function loop (){
     if (gameOver==false){
