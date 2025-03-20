@@ -3,21 +3,35 @@ const ctx = canvas.getContext('2d')
 let gravidade = 0.5
 let gameOver=false
 let reset=false
+let score=0
 
 document.addEventListener('keypress',(botaop)=>{
- if (botaop.code == "Space"){
-    personagem.pulando=true
-    personagem.velocidade_y=15
- }
- console.log(botaop)   
-})
-
-document.addEventListener('keypress',(botaor)=>{
-    if (botaor.code=="KeyR"){
-       reset=true
-    }
-    console.log(botaor)    
-   })
+      if (botaop.code == "Space" && personagem.pulando==false){
+         personagem.pulando=true
+         personagem.velocidade_y=15
+      }
+      console.log(botaop)   
+     })
+     
+     document.addEventListener('keypress',(botaor)=>{
+         if (botaor.code=="KeyR"){
+            reset=true
+         }
+         console.log(botaor)    
+        })
+     
+     document.addEventListener('keypress',(botaoa)=>{
+          if (botaoa.code=="KeyA"){
+              personagem.x=personagem.x-15
+          }
+          console.log(botaoa)    
+     })
+     document.addEventListener('keypress',(botaoD)=>{
+          if (botaoD.code=="KeyD"){
+              personagem.x=personagem.x+15
+          }
+      console.log(botaoD)    
+     })
 
 const personagem = {
     x:100,
@@ -48,29 +62,12 @@ function desenharpersonagem (){
 function atualizarpersonagem(){
  if (personagem.pulando == true){   
      personagem.y -= personagem.velocidade_y
-     personagem.largura=40
-     personagem.altura=60
-     personagem.x=90
-     if(personagem.velocidade_y<3){
-         personagem.largura=60
-         personagem.altura=40
-         personagem.x=80
-         if(personagem.velocidade_y<=-3){
-             personagem.largura=40
-             personagem.altura=60
-             personagem.x=90  
-         }   
-     }
      if (personagem.y >= canvas.height - 50){
         personagem.y=canvas.height-50
         personagem.velocidade_y=0
         personagem.pulando=false   
     }
      g()
- }
- else {
-    personagem.largura=50
-    personagem.altura=50
  }
 }
 function desenharobstaculo() {
@@ -85,6 +82,9 @@ function atualizarobstaculo(){
     obstaculo.x=obstaculo.x-obstaculo.velocidade_x
     if (obstaculo.x<=0){
        obstaculo.x=canvas.width
+       obstaculo.velocidade_x = obstaculo.velocidade_x*1.1
+       obstaculo.altura=(Math.random()*150)
+       obstaculo.y=canvas.height-obstaculo.altura
     }
 }
 function verificarColizao(){
@@ -94,8 +94,15 @@ function verificarColizao(){
      personagem.velocidade_y=0
      ctx.fillStyle='yellow'
      ctx.font='50px Arial'
-     ctx.fillText('GAME OVER',50,100)
+     ctx.fillText('GAME OVER',400,200)
      gameOver=true
+  }
+  else {
+  score=score+(1*obstaculo.velocidade_x)
+  ctx.fillStyle='black'
+  ctx.font='30px Arial'
+  ctx.fillText('Pontuação:' + score,70,50)
+  console.log(score)
   }
 }
 function Restart(){
