@@ -20,43 +20,46 @@ document.addEventListener('keypress',(botaop)=>{
          console.log(botaor)    
         })
      
-     document.addEventListener('keypress',(botaoa)=>{
+     document.addEventListener('keydown',(botaoa)=>{
           if (botaoa.code=="KeyA"){
-              personagem.x=personagem.x-15
+              personagem.velocidade_x=-7
           }
           console.log(botaoa)    
      })
-     document.addEventListener('keypress',(botaoD)=>{
+     document.addEventListener('keydown',(botaoD)=>{
           if (botaoD.code=="KeyD"){
-              personagem.x=personagem.x+15
+             personagem.velocidade_x=7
           }
       console.log(botaoD)    
      })
 
 const personagem = {
     x:100,
-    y:canvas.height-50,
+    y:canvas.height-70,
     largura:50,
     altura:50,
     velocidade_y:0,
-    pulando:false
+    velocidade_x:0,
+    pulando:false,
+    //imagem: new image()
 }
 
 const obstaculo = {
     x:canvas.width-50,
-    y:canvas.height-100,
+    y:canvas.height-120,
     largura:50,
     altura:100,
     velocidade_x:4,
 }
 
 function desenharpersonagem (){
-    ctx.fillStyle = 'black'
-    ctx.fillRect(
+    ctx,drawImage(
+        personagem.imagem,
         personagem.x,
         personagem.y,
         personagem.largura,
-        personagem.altura)  
+        personagem.altura,
+    )
 }
 
 function atualizarpersonagem(){
@@ -64,11 +67,11 @@ function atualizarpersonagem(){
      personagem.y -= personagem.velocidade_y
      if (personagem.y >= canvas.height - 50){
         personagem.y=canvas.height-50
-        personagem.velocidade_y=0
         personagem.pulando=false   
     }
      g()
  }
+ personagem.x=personagem.velocidade_x+personagem.x
 }
 function desenharobstaculo() {
     ctx.fillStyle = 'red'
