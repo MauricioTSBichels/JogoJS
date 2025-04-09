@@ -6,6 +6,15 @@ document.addEventListener('keypress', (e) => {
         console.log(e)
         personagem.saltar()
     }
+    if (e.code == 'KeyA'){
+        console.log(e)
+        personagem.andarn()
+    }if (e.code == 'KeyD'){
+        console.log(e)
+        personagem.andarm()
+    }    
+    
+
 } )
 class Entidade {
     constructor(x, y, largura, altura, cor){
@@ -22,17 +31,26 @@ class Entidade {
 }
 
 class Personagem extends Entidade {
-  #velocidade_y  
+  #velocidade_y
+  #velocidade_x  
  constructor(x,y, largura, altura, cor){
      super(x,y, largura, altura, cor)
      this.#velocidade_y=0
+     this.#velocidade_x=0
      this.pulando=false
  }
  saltar (){
      this.#velocidade_y = 15
      this.pulando=true 
  }
+ andarn(){
+     this.#velocidade_x=-5
+ }
+ andarm(){
+     this.#velocidade_x=+5
+ }
  atualizar(){
+    this.x += this.#velocidade_x
     if (this.pulando == true){   
         this.y -= this.#velocidade_y
         this.#velocidade_y -= 0.5
@@ -57,6 +75,9 @@ class Obstaculo extends Entidade{
             this.x=canvas.width
             this.#velocidade_x = this.#velocidade_x*1.1
             this.altura=(Math.random()*150)
+            if(this.#velocidade_x>12){
+               this.#velocidade_x=12 
+            }
             this.y=canvas.height-this.altura
          }
      }     
